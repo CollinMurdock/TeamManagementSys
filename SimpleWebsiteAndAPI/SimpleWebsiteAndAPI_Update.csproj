@@ -71,9 +71,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="api.asmx" />
+    <Content Include="includes\Slider.css" />
+    <Content Include="includes\Style.css" />
     <Content Include="injuries.html" />
     <Content Include="includes\head.html" />
-    <Content Include="index.html" />
+    <Content Include="players.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

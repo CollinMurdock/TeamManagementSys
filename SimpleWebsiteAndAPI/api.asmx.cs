@@ -463,10 +463,16 @@ namespace WebAPI {
 		#region ######################################################################################################################################################## Methods
 		
         [WebMethod]
-        public void getAllPlayers() {
+        public void getAllPlayers()
+        {
             send("spGetAllPlayers", serializeStyle.DATA_TABLE);
         }
 
+        [WebMethod]
+        public void getCurrentInjuries()
+        {
+            send("spGetPlayerInjuries", serializeStyle.DATA_TABLE);
+        }
         
 
 		#endregion
