@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Players Page</title>
+    <link rel="import" href="includes/head.html">
+</head>
+<body>
+    <header>
+
+        <nav class="navbar navbar-inverse">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="index.html">Team Management System</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="injuries.html">Injury page</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>View Players</h1>
+
+    <table id="player-table" class="table" style="max-width:1000px;">
+        <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Age</th>
+                <th>Weight</th>
+                <th>Height</th>
+            </tr>
+        </thead>
+        <tbody id="bodyAllPlayers"></tbody>
+    </table>
+    <script>
+        function getAllPlayers() {
+            service("getAllPlayers", "{}", function (data) {
+                console.log(data);
+                var d = "";
+                $.each(data, function (index, value) {
+
+                    var regEx = /\d+/g;
+                    var dob = new Date(parseInt(value.dob.match(regEx)));
+                    var today = new Date();
+                    var diff = today - dob;
+                    var age = parseInt((diff / 1000 / 60 / 60 / 24) / 365);
+
+                    d += '<tr id=player'+value.playerID+'><td>' + value.name + '</td>';
+                    d += '<td>' + value.position + '</td>';
+                    d += '<td>' + age + '</td>';
+                    d += '<td>' + value.weight + '</td>';
+                    d += '<td>' + value.height + '</td>';
+                    d += '<td><button class="stats-button" onclick=getPlayerStats('+value.playerID+')>View Stats</button></td>'
+                    d += '</tr>';
+                
+                });
+                $("#bodyAllPlayers").html(d);
+                
+            }, function () { console.log("fail") });
+            
+
+        }
+
+        function getPlayerStats(id) {
+            console.log('hey' + id);
+
+            service("getPlayerStats", "{id: "+id+"}", function (data) {
+
+                var d = "";
+                $.each(data, function (index, value) {
+
+                    d += '<tr><td>' + value.points + '</td></tr>';
+                    
+                });
+                $("#player"+id).slideToggle(d);
+
+            }, function () { console.log("fail") });
+        };
+
+        
+
+        getAllPlayers();
+    </script>
+</body>
+</html>
+

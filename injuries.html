@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Injuries Page</title>
+    <link rel="import" href="includes/head.html">
+    <link rel="stylesheet" type="text/css" href="includes/Style.css">
+</head>
+<body>
+    <header>
+
+        <nav class="navbar navbar-inverse">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="index.html">Team Management System</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="#">Injury page</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>View Injuries</h1>
+
+    <span>View all current injuries</span>
+    <label class="switch">
+        <input id="injury-switch" type="checkbox" />
+        <span class="slider round"></span>
+    </label>
+
+    <div class="dropdown" id="player-select">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+            Select a Player
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li id="test"><a>hey</a></li>
+        </ul>
+    </div>
+
+    <div id="all-injuries" style="display:none;">
+        <table class="table" style="max-width:800px;">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Injury Date</th>
+                    <th>Injury Description</th>
+                    <th>Estimated Return</th>
+                </tr>
+            </thead>
+            <tbody id="bodyAllInjuries"></tbody>
+        </table>
+    </div>
+
+
+    <div id="player-injuries" style="display:none;">
+        <h2>Injury History for: </h2>
+        <table class="table" style="max-width:800px;">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Injury Date</th>
+                    <th>Injury Description</th>
+                    <th>Injury Return</th>
+                </tr>
+            </thead>
+            <tbody id="bodyAllInjuries"></tbody>
+        </table>
+    </div>
+    <script>
+        function getCurrentInjuries() {
+            console.log("hey");
+            service("getCurrentInjuries", "{}", function (data) {
+                console.log("hey");
+                var d = "";
+                $.each(data, function (index, value) {
+                    var regEx = /\d+/g;
+                    var dI = new Date(parseInt(value.dateInjured.match(regEx)));
+                    var dateInjuredString = dI.getMonth() + '-' + dI.getDate() + '-' + dI.getFullYear();
+                    var dR = new Date(parseInt(value.returnDate.match(regEx)));
+                    var dateReturnString = dR.getMonth() + '-' + dR.getDate() + '-' + dR.getFullYear();
+
+                    d += '<td>Nishil</td>';
+                    d += '<td>' + dateInjuredString + '</td>';
+                    d += '<td>' + dateReturnString + '</td>';
+                    d += '<td>' + value.injuryDescription + '</td>';
+                    d += '</tr>';
+                });
+                $("#bodyAllInjuries").html(d);
+            }, function () { console.log("fail") });
+
+        }
+
+        $(".dropdown-menu li").click(function () {
+            console.log("hey");
+            $("#player-injuries").css("display", "block");
+            $("#player-injuries h2").html("Injury history for: " + $("#test").text());
+        });
+
+
+        $("#injury-switch").change(function () {
+            if (this.checked) {
+                $("#player-injuries").css("display", "none");
+                $("#all-injuries").css("display", "block");
+                $("#player-select").css("display", "none");
+            } else {
+                $("#all-injuries").css("display", "none");
+                $("#player-select").css("display", "block");
+            }
+        });
+        function showDetails(id) {
+            alert("You selected id: " + id);
+        }
+
+        getCurrentInjuries();
+
+    </script>
+</body>
+</html>
+
