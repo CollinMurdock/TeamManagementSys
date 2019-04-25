@@ -38,6 +38,7 @@
                 <table id="stats-table" class="table">
                     <thead class="thead-dark">
                         <tr id="stats-head">
+                            <th>Season</th>
                             <th>Games Played</th>
                             <th>Points</th>
                             <th>Assists</th>
@@ -45,6 +46,8 @@
                             <th>Steals</th>
                             <th>Blocks</th>
                             <th>Turnovers</th>
+                            <th><button class="averages-button btn">View Averages</button></th>
+                            <th><button class="totals-button btn">View Totals</button></th>
                         </tr>
                     </thead>
                     <tbody id="bodyStats"></tbody>
@@ -89,6 +92,7 @@
                 $.each(data, function (index, value) {
 
                     d += '<tr>';
+                    d += '<td> ' + value.season + '</td >';
                     d += '<td> ' + value.gamesPlayed + '</td >';
                     d += '<td> ' + value.points + '</td >';
                     d += '<td> ' + value.assists + '</td >';
@@ -103,8 +107,10 @@
                 });
                 $("#bodyStats").html(d);
                 $(".stats").css("display", "inline-block");
-                $("#stats-head").append('<td><button class="stats-button btn" onclick=getPlayerAverages(' + id + ')>View Averages</button></td>');
-    
+                $(".totals-button").css("display", "none");
+                $(".averages-button").css("display", "inline");
+                $(".averages-button").attr('onclick', 'getPlayerAverages(' + id + ')');
+                
             }, function () { console.log("fail") });
         }
 
@@ -115,6 +121,7 @@
                 $.each(data, function (index, value) {
 
                     d += '<tr>';
+                    d += '<td> ' + value.season + '</td >';
                     d += '<td> ' + value.gamesPlayed + '</td >';
                     d += '<td> ' + value.points + '</td >';
                     d += '<td> ' + value.assists + '</td >';
@@ -128,6 +135,9 @@
                 });
                 $("#bodyStats").html(d);
                 $(".stats").css("display", "inline-block");
+                $(".averages-button").css("display", "none");
+                $(".totals-button").css("display", "inline");
+                $(".totals-button").attr('onclick', 'getPlayerStats(' + id + ')');
 
             }, function () { console.log("fail") });
         }

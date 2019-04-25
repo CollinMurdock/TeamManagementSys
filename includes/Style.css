@@ -66,5 +66,9 @@ input:checked + .slider:before {
 }
 
 .container{
-    width:90% !important;
+    width:95% !important;
+}
+
+.totals-button{
+    display:none;
 }
