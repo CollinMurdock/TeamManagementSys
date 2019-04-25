@@ -543,24 +543,31 @@ namespace WebAPI
         // Methods
         #region ######################################################################################################################################################## Methods
 
-        [WebMethod]
-        public void getAllPlayers()
-        {
-            send("spGetAllPlayers", serializeStyle.DATA_TABLE);
-        }
+        //[WebMethod]
+        //public void getAllPlayers()
+        //{
+        //    send("spGetAllPlayers", serializeStyle.DATA_TABLE);
+        //}
 
-        [WebMethod]
-        public void getCurrentInjuries()
-        {
-            send("spGetCurrentInjuries", serializeStyle.DATA_TABLE);
-        }
+        //[WebMethod]
+        //public void getCurrentInjuries()
+        //{
+        //    send("spGetCurrentInjuries", serializeStyle.DATA_TABLE);
+        //}
 
-        [WebMethod]
-        public void getPlayerStats(int id)
-        {
-            addParam("@id", id);
-            send("spGetPlayerStats", serializeStyle.DATA_TABLE);
-        }
+        //[WebMethod]
+        //public void getPlayerStats(int id)
+        //{
+        //    addParam("@id", id);
+        //    send("spGetPlayerStats", serializeStyle.DATA_TABLE);
+        //}
+
+        //[WebMethod]
+        //public void getPlayerAverages(int id)
+        //{
+        //    addParam("@id", id);
+        //    send("spGetPlayerAverages", serializeStyle.DATA_TABLE);
+        //}
 
         #endregion
 

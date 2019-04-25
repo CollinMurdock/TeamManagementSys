@@ -18,23 +18,43 @@
         </nav>
     </header>
     <h1>View Players</h1>
-
-    <table id="player-table" class="table" style="max-width:1000px;">
-        <thead class="thead-dark">
-            <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Age</th>
-                <th>Weight</th>
-                <th>Height</th>
-            </tr>
-        </thead>
-        <tbody id="bodyAllPlayers"></tbody>
-    </table>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <table id="player-table" class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Age</th>
+                            <th>Weight</th>
+                            <th>Height</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bodyAllPlayers"></tbody>
+                </table>
+            </div>
+            <div class="col-lg-6 stats">
+                <table id="stats-table" class="table">
+                    <thead class="thead-dark">
+                        <tr id="stats-head">
+                            <th>Games Played</th>
+                            <th>Points</th>
+                            <th>Assists</th>
+                            <th>Rebounds</th>
+                            <th>Steals</th>
+                            <th>Blocks</th>
+                            <th>Turnovers</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bodyStats"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     <script>
         function getAllPlayers() {
             service("getAllPlayers", "{}", function (data) {
-                console.log(data);
                 var d = "";
                 $.each(data, function (index, value) {
 
@@ -44,39 +64,75 @@
                     var diff = today - dob;
                     var age = parseInt((diff / 1000 / 60 / 60 / 24) / 365);
 
-                    d += '<tr id=player'+value.playerID+'><td>' + value.name + '</td>';
+                    d += '<tr id=player' + value.playerID + '><td>' + value.name + '</td>';
                     d += '<td>' + value.position + '</td>';
                     d += '<td>' + age + '</td>';
                     d += '<td>' + value.weight + '</td>';
                     d += '<td>' + value.height + '</td>';
-                    d += '<td><button class="stats-button" onclick=getPlayerStats('+value.playerID+')>View Stats</button></td>'
+                    d += '<td><button class="stats-button btn" onclick=getPlayerStats(' + value.playerID + ')>View Stats</button></td>';
                     d += '</tr>';
-                
+
                 });
                 $("#bodyAllPlayers").html(d);
-                
+
             }, function () { console.log("fail") });
-            
+
 
         }
 
         function getPlayerStats(id) {
             console.log('hey' + id);
 
-            service("getPlayerStats", "{id: "+id+"}", function (data) {
+            service("getPlayerStats", "{id: " + id + "}", function (data) {
 
                 var d = "";
                 $.each(data, function (index, value) {
 
-                    d += '<tr><td>' + value.points + '</td></tr>';
+                    d += '<tr>';
+                    d += '<td> ' + value.gamesPlayed + '</td >';
+                    d += '<td> ' + value.points + '</td >';
+                    d += '<td> ' + value.assists + '</td >';
+                    d += '<td> ' + value.rebounds + '</td >';
+                    d += '<td> ' + value.steals + '</td >';
+                    d += '<td> ' + value.blocks + '</td >';
+                    d += '<td> ' + value.turnovers + '</td >';
                     
+                    d += '</tr > ';
+
+
                 });
-                $("#player"+id).slideToggle(d);
+                $("#bodyStats").html(d);
+                $(".stats").css("display", "inline-block");
+                $("#stats-head").append('<td><button class="stats-button btn" onclick=getPlayerAverages(' + id + ')>View Averages</button></td>');
+    
+            }, function () { console.log("fail") });
+        }
+
+        function getPlayerAverages(id) {
+            service("getPlayerAverages", "{id: " + id + "}", function (data) {
+
+                var d = "";
+                $.each(data, function (index, value) {
+
+                    d += '<tr>';
+                    d += '<td> ' + value.gamesPlayed + '</td >';
+                    d += '<td> ' + value.points + '</td >';
+                    d += '<td> ' + value.assists + '</td >';
+                    d += '<td> ' + value.rebounds + '</td >';
+                    d += '<td> ' + value.steals + '</td >';
+                    d += '<td> ' + value.blocks + '</td >';
+                    d += '<td> ' + value.turnovers + '</td >';
+                    d += '</tr> ';
+
+
+                });
+                $("#bodyStats").html(d);
+                $(".stats").css("display", "inline-block");
 
             }, function () { console.log("fail") });
-        };
+        }
 
-        
+
 
         getAllPlayers();
     </script>

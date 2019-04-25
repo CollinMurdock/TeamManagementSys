@@ -115,3 +115,5 @@ C:\Users\murdoccr\Desktop\SimpleWebsiteAndAPI_Update_2\SimpleWebsiteAndAPI\obj\D
 C:\Users\murdoccr\Desktop\SimpleWebsiteAndAPI_Update_2\SimpleWebsiteAndAPI\obj\Debug\SimpleWebsiteAndAPI_Update.csproj.CopyComplete
 C:\Users\murdoccr\Desktop\SimpleWebsiteAndAPI_Update_2\SimpleWebsiteAndAPI\obj\Debug\SimpleWebsiteAndAPI.dll
 C:\Users\murdoccr\Desktop\SimpleWebsiteAndAPI_Update_2\SimpleWebsiteAndAPI\obj\Debug\SimpleWebsiteAndAPI.pdb
+C:\Users\murdoccr\Desktop\database_project\TeamManagementSys\obj\Debug\SimpleWebsiteAndAPI.dll
+C:\Users\murdoccr\Desktop\database_project\TeamManagementSys\obj\Debug\SimpleWebsiteAndAPI.pdb
