@@ -200,3 +200,6 @@ C:\Users\colli\Desktop\spring_2019\CSE_385\final_project\TeamManagementSys\obj\D
 C:\Users\colli\Desktop\spring_2019\CSE_385\final_project\TeamManagementSys\obj\Debug\SimpleWebsiteAndAPI_Update.csproj.CopyComplete
 C:\Users\colli\Desktop\spring_2019\CSE_385\final_project\TeamManagementSys\obj\Debug\SimpleWebsiteAndAPI.dll
 C:\Users\colli\Desktop\spring_2019\CSE_385\final_project\TeamManagementSys\obj\Debug\SimpleWebsiteAndAPI.pdb
+C:\Users\colli\Desktop\spring_2019\CSE_385\final_project\TeamManagementSys\bin\nunit.framework.dll
+C:\Users\colli\Desktop\spring_2019\CSE_385\final_project\TeamManagementSys\bin\nunit.framework.pdb
+C:\Users\colli\Desktop\spring_2019\CSE_385\final_project\TeamManagementSys\bin\nunit.framework.xml
