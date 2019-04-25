@@ -203,3 +203,7 @@ C:\Users\colli\Desktop\spring_2019\CSE_385\final_project\TeamManagementSys\obj\D
 C:\Users\colli\Desktop\spring_2019\CSE_385\final_project\TeamManagementSys\bin\nunit.framework.dll
 C:\Users\colli\Desktop\spring_2019\CSE_385\final_project\TeamManagementSys\bin\nunit.framework.pdb
 C:\Users\colli\Desktop\spring_2019\CSE_385\final_project\TeamManagementSys\bin\nunit.framework.xml
+C:\Users\colli\Desktop\spring_2019\CSE_385\final_project\TeamManagementSys\bin\NUnit3.TestAdapter.dll
+C:\Users\colli\Desktop\spring_2019\CSE_385\final_project\TeamManagementSys\bin\NUnit3.TestAdapter.pdb
+C:\Users\colli\Desktop\spring_2019\CSE_385\final_project\TeamManagementSys\bin\nunit.engine.dll
+C:\Users\colli\Desktop\spring_2019\CSE_385\final_project\TeamManagementSys\bin\nunit.engine.api.dll

@@ -69,75 +69,41 @@ AS
 	ORDER BY p.name
 GO
 
-CREATE PROCEDURE spGetPlayer
-	@name VARCHAR(50)
-AS
-	SET NOCOUNT ON
 
-	SELECT * FROM Players WHERE name = @name
-GO
-
-CREATE PROCEDURE spInsertPlayer
-	@name		VARCHAR(50),
-	@position	CHAR(1),
-	@dob		DATE,
-	@height		INT,
-	@weight		INT
-
-AS
-	SET NOCOUNT ON
-
-	INSERT INTO Players (name, position, dob, height, weight)
-	VALUES (@name, @position, @dob, @height, @weight)
-
-GO
 
 CREATE PROCEDURE spDeletePlayer
-	@name	VARCHAR(50)
+	@id		INT
 
 AS
 	SET NOCOUNT ON
 	
 	DELETE 
 	FROM Injuries 
-	WHERE playerID IN (
-		SELECT playerID 
-		FROM Players
-		WHERE name = @name
-	)
+	WHERE playerID = @id
 
 	DELETE 
 	FROM PlayerStats 
-	WHERE playerID IN (
-		SELECT playerID 
-		FROM Players
-		WHERE name = @name
-	)
+	WHERE playerID = @id
 
 	DELETE 
 	FROM Contracts 
-	WHERE playerID IN (
-		SELECT playerID 
-		FROM Players
-		WHERE name = @name
-	)
+	WHERE playerID = @id
 
 	DELETE p
 	FROM Players p
-	WHERE p.name = @name
+	WHERE p.playerID = @id
 
 GO
 
 CREATE PROCEDURE spGetPlayerStats
-	@name	VARCHAR(50)
+	@id		INT
 
 AS
 	SET NOCOUNT ON
 
 	SELECT * 
 	FROM PlayerStats ps 
-	JOIN Players p ON p.playerId = ps.playerId
-	WHERE p.name  = @name
+	WHERE ps.playerID = @id
 
 GO
 
@@ -146,26 +112,23 @@ CREATE PROCEDURE spAddContractYear
 	@year	INT,
 	@salary	INT,
 	@bonus	INT,
-	@name	VARCHAR(50)
+	@id		INT
 AS
 	SET NOCOUNT ON
 
 	INSERT INTO Contracts(playerID, year, salary, bonus)
-	SELECT playerID, @year, @salary, @bonus
-	FROM Players WHERE name = @name	
+	VALUES(@id, @year, @salary, @bonus)	
 	
 GO
 
 CREATE PROCEDURE spGetPlayerContract
-	@name	VARCHAR(50)
+	@id		INT
 AS
 	SET NOCOUNT ON
 
 	SELECT *
 	FROM Contracts
-	WHERE playerID IN (
-		SELECT playerID FROM Players WHERE name = @name
-	)
+	WHERE playerID = @id
 GO
 
 
@@ -173,35 +136,33 @@ CREATE PROCEDURE spAddInjury
 	@injuryDesc				VARCHAR(80),
 	@dateInjured			DATE,
 	@returnDate	DATE,
-	@name					VARCHAR(50)
+	@id						INT
 
 AS
 	SET NOCOUNT ON
 
 	INSERT INTO Injuries(playerID, injuryDescription, dateInjured, returnDate)
-	SELECT playerID, @injuryDesc, @dateInjured, @returnDate
-	FROM Players WHERE name = @name
+	VALUES(@id, @injuryDesc, @dateInjured, @returnDate)
+
 GO
 
 CREATE PROCEDURE spGetPlayerInjuries
-	@name VARCHAR(50)
+	@id		INT
 AS
 	SET NOCOUNT ON
 
 	SELECT * 
 	FROM Injuries 
-	WHERE playerID IN(
-		SELECT playerID FROM Players WHERE name = @name
-	)
+	WHERE playerID = @id
 GO
 
 CREATE PROCEDURE spGetCurrentInjuries
 AS
 	SET NOCOUNT ON
 	
-	SELECT * 
-	FROM Injuries
-	WHERE returnDate > GETDATE()
+	SELECT i.dateInjured, i.injuryDescription, i.injuryID, i.playerID, i.returnDate, p.name
+	FROM Injuries i, Players p
+	WHERE returnDate > GETDATE() AND p.playerID = i.playerID
 
 GO
 
@@ -232,18 +193,43 @@ AS
 
 GO
 
+CREATE PROCEDURE spAddGameStats
+	@id			INT,
+	@season		INT,
+	@points		INT,
+	@assists	INT,
+	@rebounds	INT,
+	@steals		INT,
+	@blocks		INT,
+	@turnovers	INT
+AS
+	SET NOCOUNT ON
+
+	UPDATE PlayerStats
+	SET		gamesPlayed = gamesPlayed + 1,
+			points = points + @points,
+			assists = assists + @assists,
+			rebounds = rebounds + @rebounds,
+			steals = steals + @steals,
+			blocks = blocks + @blocks,
+			turnovers = turnovers + @turnovers
+	WHERE playerID = @id
+
+GO
+
+
 --=================================================================Creating Views
 
 CREATE VIEW vwAvgPlayerStats AS
 SELECT	playerID,
 		season,
 		gamesPlayed,
-		[points] = points / gamesPlayed,
-		[assists] = assists / gamesPlayed,
-		[rebounds] = rebounds / gamesPlayed,
-		[steals] = steals / gamesPlayed,
-		[blocks] = blocks / gamesPlayed,
-		[turnovers] = turnovers / gamesPlayed
+		[points] = CAST(points AS float) / gamesPlayed,
+		[assists] = CAST(assists AS float) / gamesPlayed,
+		[rebounds] = CAST(rebounds AS float) / gamesPlayed,
+		[steals] = CAST(steals AS float) / gamesPlayed,
+		[blocks] = CAST(blocks AS float) / gamesPlayed,
+		[turnovers] = CAST(turnovers AS float) / gamesPlayed
 FROM dbo.PlayerStats
 
 GO
@@ -382,39 +368,10 @@ VALUES	(8,2019,25467250,130000),
 	GO
 --Changes made on April 25, 2019
 
---================================================================Altering stored Procedures
-ALTER PROCEDURE spGetCurrentInjuries
-AS
-	SET NOCOUNT ON
+
 	
-	SELECT i.dateInjured, i.injuryDescription, i.injuryID, i.playerID, i.returnDate, p.name
-	FROM Injuries i, Players p
-	WHERE returnDate > GETDATE() AND p.playerID = i.playerID
 
-	GO
-	
-ALTER PROCEDURE spGetPlayerInjuries
-	@id int
-AS
-	SET NOCOUNT ON
 
-	SELECT * 
-	FROM Injuries 
-	WHERE playerID IN(
-		SELECT playerID FROM Players WHERE playerID = @id
-	)
-
-	GO
-
-ALTER PROCEDURE spGetPlayerStats
-	@id INT
-
-AS
-	SET NOCOUNT ON
-
-	SELECT * 
-	FROM PlayerStats ps 
-	WHERE ps.playerID = @id
 
 
 
