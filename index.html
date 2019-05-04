@@ -207,9 +207,9 @@
         });
 
         $("#submit-player-button").click(function () {
-            console.log("hey");
             //Player name
             var name = $("form #player-name").val();
+            console.log(name);
             //if name field is empty
             if (name.length == 0) alert("Please enter the name of the player");
 
@@ -228,10 +228,14 @@
             var weight = $("form #player-weight").val();
             if (weight < 0) alert("Please enter a valid weight");
 
-            service("addPlayer", "{name: " + name + ", position: " + position + ", dob: " + dob + ", height: " + height + ", weight: " + weight+"}",
-                function () {
+            service("addPlayer", "{name: '"+name+"', position: '"+position+"', dob: '"+dob+"', height: 70, weight: 150}", 
+                function (data) {
                     console.log("Player successfully added");
-                }, function () { console.log("failed to add player");});
+                    getAllPlayers();
+                }, function () {
+                    console.log("failed to add player");
+                }
+            );
        
         });
 
