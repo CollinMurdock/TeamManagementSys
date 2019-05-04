@@ -20,7 +20,49 @@
     </header>
     <h1>View Contracts</h1>
     <div class="container" id="addContract">
+        <div class="row">
+            <div id="addContract">
+                <button id="addContractButton" class="btn">AddContract</button>
+            </div>
+            <div id="addContractForm" style="display:none;">
+                <form>
+                    <div class="form-row">
+                        <div class="form-group col-md-8">
+                            <label>Name</label>
+                            <input class="form-control" type="text" id="player-name" placeholder="John Smith" />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Position</label>
+                            <select class="form-control" id="player-position">
+                                <option>Guard</option>
+                                <option>Forward</option>
+                                <option>Center</option>
+                            </select>
+                        </div>
+                    </div>
 
+                    <div class="form-group col-md-8">
+                        <label>Date of Birth</label>
+                        <input class="form-control" type="date" id="player-dob">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Height (inches)</label>
+                            <input class="form-control" type="number" id="player-height">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Weight (pounds)</label>
+                            <input class="form-control" type="number" id="player-weight">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <button id="submit-player-button" type="button" class="btn">Submit Player</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
     <div class ="container" id="playerContracts"></div>
     <script>
@@ -47,10 +89,19 @@
                     });
                     d += "</tbody>";
                     d += "</table>";
+                    d += "<button class = 'btn' onclick = addContractYear(" + value.ID + ");>Add Year</button>";
                     d += "</div>";
+                    d += "<br><br>";
                 });
                 $("#playerContracts").html(d);
             }, function () { console.log("fail") });
+        }
+
+        function addContractYear(id) {
+            service("addContractYear", "{id: " + id + ", }", function (data) {
+                getAllPlayers();
+            }), function () { console.log("failed to delete player") };
+
         }
 
         function formatNumber(num) {
@@ -61,6 +112,12 @@
         function showDetails(id) {
             alert("You selected id: " + id);
         }
+
+
+        $("#addContractButton").click(function () {
+            $(this).css("display", "none");
+            $("#addContractForm").css("display", "block");
+        });
 
         getAllPlayerContract()
 
