@@ -1,4 +1,4 @@
-﻿--=================================================Header
+--=================================================Header
 --Title: Basketball Team Management System Database Script
 --Team Members: Collin Murdock, Tim Romer, Nishil Shah
 --Last edited: 4/25/2019
@@ -217,6 +217,26 @@ AS
 
 GO
 
+CREATE PROCEDURE spGetAllContracts
+	
+AS
+	SET NOCOUNT ON
+	
+	SELECT 	[Name] = p.name,
+			[Year] = (
+				SELECT 	c.year,
+						c.salary,
+						c.bonus
+				FROM Contracts c 
+				WHERE p.playerID = c.playerID
+				FOR JSON PATH
+			)
+	FROM Players p
+	FOR JSON PATH, ROOT('Contracts')
+	
+GO
+
+
 
 --=================================================================Creating Views
 
@@ -366,15 +386,5 @@ VALUES	(8,2019,25467250,130000),
 		(17,2019,0,0)
 		
 	GO
---Changes made on April 25, 2019
-
-
-	
-
-
-
-
-
-
-	
+--Changes made on May 4, 2019
 
