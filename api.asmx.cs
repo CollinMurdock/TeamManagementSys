@@ -571,7 +571,7 @@ namespace WebAPI
 
 		[WebMethod]
 		public void addPlayer(string name, string position, string dob, int height, int weight) {
-			addParam("@name", name);
+            addParam("@name", name);
 			addParam("@position", position);
 			addParam("@dob", dob);
 			addParam("@height", height);
@@ -581,7 +581,7 @@ namespace WebAPI
 		
 		[WebMethod]
 		public void addContractYear(int year, int salary, int bonus, string name) {
-			addParam("@year", year);
+            addParam("@year", year);
 			addParam("@salary", salary);
 			addParam("@bonus", bonus);
 			addParam("@name", name);

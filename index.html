@@ -22,14 +22,47 @@
     <div class="container">
         <div id="add-player">
             <button id="add-player-button" class="btn">Add Player</button>
-            <div id="add-player-form">
-                <input type="text" id="player-name" placeholder="Name" />
-                <input type="text" id="player-position" placeholder="Position (G, F or C)" />
-                <input type="text" id="player-dob" placeholder="Date of Birth (YYYY-MM-DD)" />
-                <input type="text" id="player-height" placeholder="Height (inches)" />
-                <input type="text" id="player-weight" placeholder="Weight (pounds)" />
-            </div>
+            <button id="hide-add-player-button" class="btn" style="display:none;">Hide</button>
+            <form id="add-player-form" style="display:none;">
+                <div class="form-row">
+                    <div class="form-group col-md-8">
+                        <label>Name</label>
+                        <input class="form-control" type="text" id="player-name" placeholder="John Smith" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Position</label>
+                        <select class="form-control" id="player-position">
+                            <option>Guard</option>
+                            <option>Forward</option>
+                            <option>Center</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-8">
+                    <label>Date of Birth</label>
+                    <input class="form-control" type="date" id="player-dob">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Height (inches)</label>
+                        <input class="form-control" type="number" id="player-height">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Weight (pounds)</label>
+                        <input class="form-control" type="number" id="player-weight">
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <button id="submit-player-button" type="button" class="btn">Submit Player</button>
+                </div>
+                
+            </form>
         </div>
+    </div>
+    <div class="container">
         <div class="row">
             <div class="col-lg-6">
                 <table id="player-table" class="table">
@@ -163,7 +196,47 @@
         }
 
         $("#add-player-button").click(function () {
-            
+            $("#hide-add-player-button").css("display", "block");
+            $(this).css("display", "none");
+            $("#add-player-form").css("display", "block");
+        });
+        $("#hide-add-player-button").click(function () {
+            $("#add-player-button").css("display", "block");
+            $(this).css("display", "none");
+            $("#add-player-form").css("display", "none");
+        });
+
+        $("#submit-player-button").click(function () {
+            //Player name
+            var name = $("form #player-name").val();
+            console.log(name);
+            //if name field is empty
+            if (name.length == 0) alert("Please enter the name of the player");
+
+            //Player position
+            var position = $("form #player-position").val();
+
+            //Player dob
+            var dob = $("form #player-dob").val();
+
+            //Player height
+            var height = $("form #player-height").val();
+            //if height is negative
+            if (height < 0) alert("Please enter a valid height");
+
+            //Player weight
+            var weight = $("form #player-weight").val();
+            if (weight < 0) alert("Please enter a valid weight");
+
+            service("addPlayer", "{name: '"+name+"', position: '"+position+"', dob: '"+dob+"', height: 70, weight: 150}", 
+                function (data) {
+                    console.log("Player successfully added");
+                    getAllPlayers();
+                }, function () {
+                    console.log("failed to add player");
+                }
+            );
+       
         });
 
         getAllPlayers();
