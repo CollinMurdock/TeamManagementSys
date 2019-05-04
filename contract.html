@@ -89,11 +89,19 @@
                     });
                     d += "</tbody>";
                     d += "</table>";
-                    d += "";
+                    d += "<button class = 'btn' onclick = addContractYear(" + value.ID + ");>Add Year</button>";
                     d += "</div>";
+                    d += "<br><br>";
                 });
                 $("#playerContracts").html(d);
             }, function () { console.log("fail") });
+        }
+
+        function addContractYear(id) {
+            service("addContractYear", "{id: " + id + ", }", function (data) {
+                getAllPlayers();
+            }), function () { console.log("failed to delete player") };
+
         }
 
         function formatNumber(num) {

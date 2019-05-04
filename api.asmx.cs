@@ -580,11 +580,11 @@ namespace WebAPI
 		}
 		
 		[WebMethod]
-		public void addContractYear(int year, int salary, int bonus, string name) {
+		public void addContractYear(int year, int salary, int bonus, int id) {
             addParam("@year", year);
 			addParam("@salary", salary);
 			addParam("@bonus", bonus);
-			addParam("@name", name);
+			addParam("@id", id);
 			send("spAddContractYear", serializeStyle.DATA_TABLE);
 		}
 		
