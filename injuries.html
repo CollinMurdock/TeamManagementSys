@@ -66,9 +66,9 @@
     </div>
     <script>
         function getCurrentInjuries() {
-            console.log("hey");
+            
             service("getCurrentInjuries", "{}", function (data) {
-                console.log("hey");
+                console.log(data);
                 var d = "";
                 $.each(data, function (index, value) {
                     var regEx = /\d+/g;
@@ -77,7 +77,8 @@
                     var dR = new Date(parseInt(value.returnDate.match(regEx)));
                     var dateReturnString = dR.getMonth() + '-' + dR.getDate() + '-' + dR.getFullYear();
 
-                    d += '<td>Nishil</td>';
+                    d += '<tr>'
+                    d += '<td>' + value.name + '</td>';
                     d += '<td>' + dateInjuredString + '</td>';
                     d += '<td>' + dateReturnString + '</td>';
                     d += '<td>' + value.injuryDescription + '</td>';

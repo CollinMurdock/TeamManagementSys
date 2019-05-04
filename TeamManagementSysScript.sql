@@ -180,6 +180,12 @@ AS
 	INSERT INTO Players (name, position, dob, height, weight)
 	VALUES	(@name, @position, @dob, @height, @weight)
 
+	INSERT INTO dbo.PlayerStats
+	(playerID, season,gamesPlayed,points,assists,rebounds,steals,blocks,turnovers)
+	VALUES
+	(   (SELECT playerId FROM Players WHERE name = @name), 
+	    YEAR(GETDATE()), 0, 0, 0, 0, 0, 0, 0  )
+
 GO
 
 CREATE PROCEDURE spGetPlayerAverages
@@ -242,15 +248,16 @@ GO
 --=================================================================Creating Views
 
 CREATE VIEW vwAvgPlayerStats AS
+
 SELECT	playerID,
 		season,
 		gamesPlayed,
-		[points] = CAST(points AS float) / gamesPlayed,
-		[assists] = CAST(assists AS float) / gamesPlayed,
-		[rebounds] = CAST(rebounds AS float) / gamesPlayed,
-		[steals] = CAST(steals AS float) / gamesPlayed,
-		[blocks] = CAST(blocks AS float) / gamesPlayed,
-		[turnovers] = CAST(turnovers AS float) / gamesPlayed
+		[points] = IIF(gamesPlayed != 0, CAST(points AS float) / gamesPlayed, 0),
+		[assists] = IIF(gamesPlayed != 0, CAST(assists AS float) / gamesPlayed, 0),
+		[rebounds] = IIF(gamesPlayed != 0, CAST(rebounds AS float) / gamesPlayed, 0),
+		[steals] = IIF(gamesPlayed != 0, CAST(steals AS float) / gamesPlayed, 0),
+		[blocks] = IIF(gamesPlayed != 0, CAST(blocks AS float) / gamesPlayed, 0),
+		[turnovers] = IIF(gamesPlayed != 0, CAST(turnovers AS float) / gamesPlayed, 0)
 FROM dbo.PlayerStats
 
 GO

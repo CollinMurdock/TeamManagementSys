@@ -228,10 +228,11 @@
             var weight = $("form #player-weight").val();
             if (weight < 0) alert("Please enter a valid weight");
 
-            service("addPlayer", "{name: '"+name+"', position: '"+position+"', dob: '"+dob+"', height: 70, weight: 150}", 
+            service("addPlayer", "{name: '"+name+"', position: '"+position+"', dob: '"+dob+"', height: "+height+", weight: "+weight+"}", 
                 function (data) {
                     console.log("Player successfully added");
                     getAllPlayers();
+                    $("#hide-add-player-button").trigger("click");
                 }, function () {
                     console.log("failed to add player");
                 }
