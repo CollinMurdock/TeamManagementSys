@@ -20,6 +20,16 @@
     </header>
     <h1>View Players</h1>
     <div class="container">
+        <div id="add-player">
+            <button id="add-player-button" class="btn">Add Player</button>
+            <div id="add-player-form">
+                <input type="text" id="player-name" placeholder="Name" />
+                <input type="text" id="player-position" placeholder="Position (G, F or C)" />
+                <input type="text" id="player-dob" placeholder="Date of Birth (YYYY-MM-DD)" />
+                <input type="text" id="player-height" placeholder="Height (inches)" />
+                <input type="text" id="player-weight" placeholder="Weight (pounds)" />
+            </div>
+        </div>
         <div class="row">
             <div class="col-lg-6">
                 <table id="player-table" class="table">
@@ -146,9 +156,15 @@
 
         function removePlayer(first, last, id) {
             if (confirm("Deleting player: " + first + " " + last)) {
-                service("deletePlayer", "{id: " + id + )
+                service("deletePlayer", "{id: " + id + "}", function (data) {
+                    getAllPlayers();
+                }), function () { console.log("failed to delete player") };
             }
         }
+
+        $("#add-player-button").click(function () {
+            
+        });
 
         getAllPlayers();
     </script>
