@@ -595,10 +595,16 @@ namespace WebAPI
             send("spDeletePlayer", serializeStyle.DATA_TABLE);
         }
 		
-	[WebMethod]
-	public void getAllContracts() {
-		send("spGetAllContracts", serializeStyle.JSON_RETURN);
-	}
+	    [WebMethod]
+	    public void getAllContracts() {
+		    send("spGetAllContracts", serializeStyle.JSON_RETURN);
+	    }
+
+        [WebMethod]
+        public void getPlayerInjuries(int id)
+        {
+            send("spGetPlayerInjuries", serializeStyle.DATA_TABLE);
+        }
 
         #endregion
 		
