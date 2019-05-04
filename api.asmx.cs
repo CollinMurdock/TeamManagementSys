@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -569,6 +569,24 @@ namespace WebAPI
             send("spGetPlayerAverages", serializeStyle.DATA_TABLE);
         }
 
+		[WebMethod]
+		public void addPlayer(string name, string position, string dob, int height, in weight) {
+			addParam("@name", name);
+			addParam("@position", position);
+			addParam("@dob", dob);
+			addParam("@height", height);
+			addParam("@weight", weight);
+			send("spAddPlayer", serializeStyle.DATA_TABLE);
+		}
+		
+		[WebMethod]
+		public void addContractYear(int year, int salary, int bonus, string name) {
+			addParam("@year", year);
+			addParam("@salary", salary);
+			addParam("@bonus", bonus);
+			addParam("@name", name);
+			send("spAddContractYear", serializeStyle.DATA_TABLE);
+		}
         #endregion
 
 
