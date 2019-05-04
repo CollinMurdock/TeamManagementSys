@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Player Contract</title>
+    <link rel="import" href="includes/head.html">
+    <link rel="stylesheet" type="text/css" href="includes/Style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-inverse">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="index.html">Team Management System</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="#">Player Contract Page</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>View Contracts</h1>
+
+    <table id="player-table" class="table" style="max-width:800px;">
+        <thead class="thead-dark">
+            <tr>
+                <th>Player Name</th>
+                <th>2019</th>
+                <th>2020</th>
+                <th>2021</th>
+                <th>2022</th>
+                <th>2023</th>
+            </tr>
+        </thead>
+        <tbody id="bodyPlayerContract"></tbody>
+    </table>
+    <script>
+function getAllPlayerContract() {
+        service("getPlayerContract", "{}", function (data) {
+                var d = "";
+            $.each(data, function (index, value) {
+                d += '<tr><td>' + value.name + '</td>';
+                    d += '<td>' +  + '</td>';
+                    d += '<td>' +  + '</td>';
+                    d += '<td>' +  + '</td>';
+                    d += '<td>' +  + '</td>';
+                });
+            $("#bodyPlayerContract").html(d);
+            }, function () { console.log("fail") });
+        }
+        }
+
+        function showDetails(id) {
+            alert("You selected id: " + id);
+        }</script>
+</body>
+</html>
+
