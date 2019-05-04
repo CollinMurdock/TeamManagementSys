@@ -13,44 +13,58 @@
                 <a class="navbar-brand" href="index.html">Team Management System</a>
             </div>
             <ul class="nav navbar-nav">
-                <li><a href="#">Player Contract Page</a></li>
+                <li><a href="injuries.html">Injury Page</a></li>
+                <li><a href="contract.html">Player Contract Page</a></li>
             </ul>
         </nav>
     </header>
     <h1>View Contracts</h1>
+    <div class="container" id="addContract">
 
-    <table id="player-table" class="table" style="max-width:800px;">
-        <thead class="thead-dark">
-            <tr>
-                <th>Player Name</th>
-                <th>2019</th>
-                <th>2020</th>
-                <th>2021</th>
-                <th>2022</th>
-                <th>2023</th>
-            </tr>
-        </thead>
-        <tbody id="bodyPlayerContract"></tbody>
-    </table>
+    </div>
+    <div class ="container" id="playerContracts"></div>
     <script>
-function getAllPlayerContract() {
-        service("getPlayerContract", "{}", function (data) {
+        function getAllPlayerContract() {
+            service("getAllContracts", "{}", function (data) {
+                console.log(data);
                 var d = "";
-            $.each(data, function (index, value) {
-                d += '<tr><td>' + value.name + '</td>';
-                    d += '<td>' +  + '</td>';
-                    d += '<td>' +  + '</td>';
-                    d += '<td>' +  + '</td>';
-                    d += '<td>' +  + '</td>';
+                $.each(data.Contracts, function (index, value) {
+                    d += "<div class = 'row'>";
+                    d += "<h3>" + value.Name +"</h3>";
+                    d += '<table class="table" style="max-width:800px;">';
+                    d += "<thead class='thead-dark'>";
+                    d += "<tr>";
+                    d += "<th>Year</th><th>Salary</th><th>Bonus</th>";
+                    d += "</tr>";
+                    d += "</thead>";
+                    d += "<tbody>";
+                    $.each(value.Year, function (year, yearValue) {
+                        d += "<tr>";
+                        d += "<td class = 'col-md-4'>" + yearValue.year + "</td>";
+                        d += "<td class = 'col-md-4'>" + formatNumber(yearValue.salary) + "</td>";
+                        d += "<td class = 'col-md-4'>" + formatNumber(yearValue.bonus) + "</td>";
+                        d += "</tr>";
+                    });
+                    d += "</tbody>";
+                    d += "</table>";
+                    d += "</div>";
                 });
-            $("#bodyPlayerContract").html(d);
+                $("#playerContracts").html(d);
             }, function () { console.log("fail") });
         }
+
+        function formatNumber(num) {
+            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
         }
+
 
         function showDetails(id) {
             alert("You selected id: " + id);
-        }</script>
+        }
+
+        getAllPlayerContract()
+
+    </script>
 </body>
 </html>
 
