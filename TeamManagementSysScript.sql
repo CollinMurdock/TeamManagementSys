@@ -180,6 +180,12 @@ AS
 	INSERT INTO Players (name, position, dob, height, weight)
 	VALUES	(@name, @position, @dob, @height, @weight)
 
+	INSERT INTO dbo.PlayerStats
+	(playerID, season,gamesPlayed,points,assists,rebounds,steals,blocks,turnovers)
+	VALUES
+	(   (SELECT playerId FROM Players WHERE name = @name), 
+	    YEAR(GETDATE()), 0, 0, 0, 0, 0, 0, 0  )
+
 GO
 
 CREATE PROCEDURE spGetPlayerAverages
