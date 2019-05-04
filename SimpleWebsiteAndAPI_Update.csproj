@@ -79,6 +79,7 @@
   <ItemGroup>
     <Content Include="api.asmx" />
     <Content Include="data_insert.sql" />
+    <Content Include="contract.html" />
     <Content Include="includes\Style.css" />
     <Content Include="injuries.html" />
     <Content Include="includes\head.html" />

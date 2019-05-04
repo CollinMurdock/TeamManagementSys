@@ -14,6 +14,7 @@
             </div>
             <ul class="nav navbar-nav">
                 <li><a href="injuries.html">Injury page</a></li>
+                <li><a href="contract.html">Player Contract Page</a></li>
             </ul>
         </nav>
     </header>
@@ -145,7 +146,7 @@
 
         function removePlayer(first, last, id) {
             if (confirm("Deleting player: " + first + " " + last)) {
-                console.log("not deleting yet but we will");
+                service("deletePlayer", "{id: " + id + )
             }
         }
 
