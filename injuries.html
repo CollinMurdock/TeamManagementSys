@@ -56,11 +56,11 @@
             <thead class="thead-dark">
                 <tr>
                     <th>Injury Date</th>
-                    <th>Injury Description</th>
                     <th>Injury Return</th>
+                    <th>Injury Description</th>
                 </tr>
             </thead>
-            <tbody id="bodyAllInjuries"></tbody>
+            <tbody id="bodyAllPlayerInjuries"></tbody>
         </table>
     </div>
     <script>
@@ -105,7 +105,29 @@
         }
 
         $("#player-select").change(function () {
-            service("")
+            var name = $("#player-select").val();
+            service("getPlayerInjuries", "{name: '" + name + "'}",
+                function (data) {
+                    console.log(data);
+                    var d = '';
+                    $.each(data, function (index, value) {
+                        var regEx = /\d+/g;
+                        var dI = new Date(parseInt(value.dateInjured.match(regEx)));
+                        var dateInjuredString = dI.getMonth() + '-' + dI.getDate() + '-' + dI.getFullYear();
+                        var dR = new Date(parseInt(value.returnDate.match(regEx)));
+                        var dateReturnString = dR.getMonth() + '-' + dR.getDate() + '-' + dR.getFullYear();
+                        console.log("hey");
+                        d += '<tr>'
+                        d += '<td>' + dateInjuredString + '</td>';
+                        d += '<td>' + dateReturnString + '</td>';
+                        d += '<td>' + value.injuryDescription + '</td>';
+                        d += '</tr>';
+                    });
+                    $("#bodyAllPlayerInjuries").html(d);
+                }, function () {
+                    console.log("player injury retrieve failed");   
+                }
+            );
 
             $("#player-injuries").css("display", "block");
         });
@@ -115,10 +137,10 @@
             if (this.checked) {
                 $("#player-injuries").css("display", "none");
                 $("#all-injuries").css("display", "block");
-                $("#player-select").css("display", "none");
+                $("form").css("display", "none");
             } else {
                 $("#all-injuries").css("display", "none");
-                $("#player-select").css("display", "block");
+                $("form").css("display", "block");
             }
         });
         function showDetails(id) {
