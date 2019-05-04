@@ -26,15 +26,14 @@
         <span class="slider round"></span>
     </label>
 
-    <div class="dropdown" id="player-select">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-            Select a Player
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-            <li id="test"><a>hey</a></li>
-        </ul>
-    </div>
+    <form >
+        <div class="form-group col-md-3">
+            <label>Select Player</label>
+            <select class="form-control" id="player-select">
+                
+            </select>
+        </div>
+    </form>
 
     <div id="all-injuries" style="display:none;">
         <table class="table" style="max-width:800px;">
@@ -89,10 +88,26 @@
 
         }
 
-        $(".dropdown-menu li").click(function () {
-            console.log("hey");
+        function addPlayerNames() {
+            service("getAllPlayers", "{}",
+                function (data) {
+                    console.log(data);
+                    var d = '';
+                    $.each(data, function (index, value) {
+                        
+                        d += '<option id="' + value.playerId + '">' + value.name + '</option>';
+                    });
+                    $("#player-select").html(d);
+                }, function () {
+
+                }
+            );
+        }
+
+        $("#player-select").change(function () {
+            service("")
+
             $("#player-injuries").css("display", "block");
-            $("#player-injuries h2").html("Injury history for: " + $("#test").text());
         });
 
 
@@ -111,6 +126,7 @@
         }
 
         getCurrentInjuries();
+        addPlayerNames();
 
     </script>
 </body>

@@ -147,13 +147,14 @@ AS
 GO
 
 CREATE PROCEDURE spGetPlayerInjuries
-	@id		INT
+	@name		VARCHAR(60)
 AS
 	SET NOCOUNT ON
 
-	SELECT * 
-	FROM Injuries 
-	WHERE playerID = @id
+	SELECT i.injuryID, p.playerID, i.injuryDescription, i.dateInjured, i.returnDate 
+	FROM Injuries i 
+		JOIN Players p ON i.playerID = p.playerID
+	WHERE p.name = @name
 GO
 
 CREATE PROCEDURE spGetCurrentInjuries

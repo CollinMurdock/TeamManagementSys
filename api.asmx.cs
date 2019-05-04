@@ -601,8 +601,9 @@ namespace WebAPI
 	    }
 
         [WebMethod]
-        public void getPlayerInjuries(int id)
+        public void getPlayerInjuries(string name)
         {
+            addParam("@name", name);
             send("spGetPlayerInjuries", serializeStyle.DATA_TABLE);
         }
 
