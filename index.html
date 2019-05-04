@@ -207,7 +207,32 @@
         });
 
         $("#submit-player-button").click(function () {
-            
+            console.log("hey");
+            //Player name
+            var name = $("form #player-name").val();
+            //if name field is empty
+            if (name.length == 0) alert("Please enter the name of the player");
+
+            //Player position
+            var position = $("form #player-position").val();
+
+            //Player dob
+            var dob = $("form #player-dob").val();
+
+            //Player height
+            var height = $("form #player-height").val();
+            //if height is negative
+            if (height < 0) alert("Please enter a valid height");
+
+            //Player weight
+            var weight = $("form #player-weight").val();
+            if (weight < 0) alert("Please enter a valid weight");
+
+            service("addPlayer", "{name: " + name + ", position: " + position + ", dob: " + dob + ", height: " + height + ", weight: " + weight+"}",
+                function () {
+                    console.log("Player successfully added");
+                }, function () { console.log("failed to add player");});
+       
         });
 
         getAllPlayers();
