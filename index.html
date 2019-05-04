@@ -7,12 +7,13 @@
 </head>
 <body>
     <header>
+
         <nav class="navbar navbar-inverse">
             <div class="navbar-header">
                 <a class="navbar-brand" href="index.html">Team Management System</a>
             </div>
             <ul class="nav navbar-nav">
-                <li><a href="injuries.html">Injury Page</a></li>
+                <li><a href="injuries.html">Injury page</a></li>
                 <li><a href="contract.html">Player Contract Page</a></li>
             </ul>
         </nav>
@@ -73,6 +74,7 @@
                     d += '<td>' + value.weight + '</td>';
                     d += '<td>' + value.height + '</td>';
                     d += '<td><button class="stats-button btn" onclick=getPlayerStats(' + value.playerID + ')>View Stats</button></td>';
+                    d += '<td><button class="remove-button btn" onclick=removePlayer(\''+value.name.split(' ')[0]+'\',\''+ value.name.split(' ')[1] + '\',' + value.playerID + ')>Remove Player</button></td>';
                     d += '</tr>';
 
                 });
@@ -142,7 +144,11 @@
             }, function () { console.log("fail") });
         }
 
-
+        function removePlayer(first, last, id) {
+            if (confirm("Deleting player: " + first + " " + last)) {
+                service("deletePlayer", "{id: " + id + )
+            }
+        }
 
         getAllPlayers();
     </script>

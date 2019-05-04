@@ -589,7 +589,12 @@ namespace WebAPI
 		}
         #endregion
 
-
+        [WebMethod]
+        public void deletePlayer(int id)
+        {
+            addParam("@id", id);
+            send("spDeletePlayer", serializeStyle.DATA_TABLE);
+        }
 
     }
 }
