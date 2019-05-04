@@ -13,7 +13,8 @@
                 <a class="navbar-brand" href="index.html">Team Management System</a>
             </div>
             <ul class="nav navbar-nav">
-                <li><a href="#">Player Contract Page</a></li>
+                <li><a href="injuries.html">Injury Page</a></li>
+                <li><a href="contract.html">Player Contract Page</a></li>
             </ul>
         </nav>
     </header>
@@ -33,20 +34,20 @@
         <tbody id="bodyPlayerContract"></tbody>
     </table>
     <script>
-function getAllPlayerContract() {
-        service("getPlayerContract", "{}", function (data) {
+        function getAllPlayerContract() {
+            service("getPlayerContract", "{}", function (data) {
                 var d = "";
-            $.each(data, function (index, value) {
-                d += '<tr><td>' + value.name + '</td>';
-                    d += '<td>' +  + '</td>';
-                    d += '<td>' +  + '</td>';
-                    d += '<td>' +  + '</td>';
-                    d += '<td>' +  + '</td>';
+                $.each(data, function (index, value) {
+                    d += '<tr><td>' + value.name + '</td>';
+                    d += '<td>' + + '</td>';
+                    d += '<td>' + + '</td>';
+                    d += '<td>' + + '</td>';
+                    d += '<td>' + + '</td>';
                 });
-            $("#bodyPlayerContract").html(d);
+                $("#bodyPlayerContract").html(d);
             }, function () { console.log("fail") });
         }
-        }
+            }
 
         function showDetails(id) {
             alert("You selected id: " + id);

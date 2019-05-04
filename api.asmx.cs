@@ -570,7 +570,7 @@ namespace WebAPI
         }
 
 		[WebMethod]
-		public void addPlayer(string name, string position, string dob, int height, in weight) {
+		public void addPlayer(string name, string position, string dob, int height, int weight) {
 			addParam("@name", name);
 			addParam("@position", position);
 			addParam("@dob", dob);
