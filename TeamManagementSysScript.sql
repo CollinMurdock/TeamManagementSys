@@ -223,6 +223,7 @@ AS
 	SET NOCOUNT ON
 	
 	SELECT 	[Name] = p.name,
+			[ID] = p.playerID,
 			[Year] = (
 				SELECT 	c.year,
 						c.salary,
