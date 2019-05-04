@@ -19,12 +19,10 @@
         </nav>
     </header>
     <h1>View Contracts</h1>
-    <div class="container" id="addContract">
+    <div class ="container">
         <div class="row">
-            <div id="addContract">
-                <button id="addContractButton" class="btn">AddContract</button>
-            </div>
-            <div id="addContractForm" style="display:none;">
+            <div class="col-md-6" id="playerContracts"></div>
+            <div class="col-md-6" id="addPlayerContractYear" style="display:none">
                 <form>
                     <div class="form-row">
                         <div class="form-group col-md-8">
@@ -40,37 +38,17 @@
                             </select>
                         </div>
                     </div>
-
-                    <div class="form-group col-md-8">
-                        <label>Date of Birth</label>
-                        <input class="form-control" type="date" id="player-dob">
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label>Height (inches)</label>
-                            <input class="form-control" type="number" id="player-height">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label>Weight (pounds)</label>
-                            <input class="form-control" type="number" id="player-weight">
-                        </div>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <button id="submit-player-button" type="button" class="btn">Submit Player</button>
-                    </div>
                 </form>
             </div>
         </div>
     </div>
-    <div class ="container" id="playerContracts"></div>
     <script>
         function getAllPlayerContract() {
             service("getAllContracts", "{}", function (data) {
                 console.log(data);
                 var d = "";
                 $.each(data.Contracts, function (index, value) {
+                    var nextYear = 2019;
                     d += "<div class = 'row'>";
                     d += "<h3>" + value.Name +"</h3>";
                     d += '<table class="table" style="max-width:800px;">';
@@ -86,10 +64,11 @@
                         d += "<td class = 'col-md-4'>" + formatNumber(yearValue.salary) + "</td>";
                         d += "<td class = 'col-md-4'>" + formatNumber(yearValue.bonus) + "</td>";
                         d += "</tr>";
+                        nextYear = yearValue.year + 1;
                     });
                     d += "</tbody>";
                     d += "</table>";
-                    d += "<button class = 'btn' onclick = addContractYear(" + value.ID + ");>Add Year</button>";
+                    d += "<button class = 'btn' onclick = 'addContractYear(" + value.ID + ", " + nextYear + ")'>Add Year</button>";
                     d += "</div>";
                     d += "<br><br>";
                 });
@@ -97,11 +76,8 @@
             }, function () { console.log("fail") });
         }
 
-        function addContractYear(id) {
-            service("addContractYear", "{id: " + id + ", }", function (data) {
-                getAllPlayers();
-            }), function () { console.log("failed to delete player") };
-
+        function addContractYear(id, nextYear) {
+            $("#addPlayerContractYear").css("display", "block");
         }
 
         function formatNumber(num) {
