@@ -73,6 +73,7 @@
                     d += '<td>' + value.weight + '</td>';
                     d += '<td>' + value.height + '</td>';
                     d += '<td><button class="stats-button btn" onclick=getPlayerStats(' + value.playerID + ')>View Stats</button></td>';
+                    d += '<td><button class="remove-button btn" onclick=removePlayer(\''+value.name.split(' ')[0]+'\',\''+ value.name.split(' ')[1] + '\',' + value.playerID + ')>Remove Player</button></td>';
                     d += '</tr>';
 
                 });
@@ -142,7 +143,11 @@
             }, function () { console.log("fail") });
         }
 
-
+        function removePlayer(first, last, id) {
+            if (confirm("Deleting player: " + first + " " + last)) {
+                console.log("not deleting yet but we will");
+            }
+        }
 
         getAllPlayers();
     </script>
