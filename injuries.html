@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -29,15 +29,6 @@
                     <span class="slider round"></span>
                 </label>
 
-                <form>
-                    <div class="form-group">
-                        <label>Select Player</label>
-                        <select class="form-control" id="player-select">
-                            <option>Select</option>
-                        </select>
-                    </div>
-                </form>
-
                 <div id="all-injuries" style="display:none;">
                     <table class="table" style="max-width:800px;">
                         <thead class="thead-dark">
@@ -53,7 +44,15 @@
                 </div>
 
 
-                <div id="player-injuries" style="display:none;">
+                <div id="player-injuries">
+                    <form>
+                        <div class="form-group">
+                            <label>Select Player</label>
+                            <select class="form-control" id="player-select">
+                                <option>Select</option>
+                            </select>
+                        </div>
+                    </form>
                     <table class="table" style="max-width:800px;">
                         <thead class="thead-dark">
                             <tr>
@@ -86,7 +85,12 @@
                         <textarea class="form-control" id="injury-desc-input" rows="3"></textarea>
                     </div>
                     <div class="form-group col-md-6">
-                        <button id="submit-injury-button" class="btn">Submit Injury</button>
+                        <button id="submit-injury-button" type ="button" class="btn">Submit Injury</button>
+                    </div>
+                    <div class="form-row" id="formError">
+                        <div class="alert alert-danger">
+                            <strong>Danger!</strong> You must submit valid dates, player, and description!
+                        </div>
                     </div>
                 </form>
             </div>
@@ -165,8 +169,9 @@
             if (this.checked) {
                 $("#player-injuries").css("display", "none");
                 $("#all-injuries").css("display", "block");
-                $("form").css("display", "none");
+                $("form").css("display", "block");
             } else {
+                $("#player-injuries").css("display", "block");
                 $("#all-injuries").css("display", "none");
                 $("form").css("display", "block");
             }
@@ -181,14 +186,29 @@
             var injuryDate = $("#date-injured-input").val();
             var returnDate = $("#date-return-input").val();
 
-            service("addInjury", "{name: '" + name + "', injuryDesc: '"+injuryDesc+"', dateInjured: '"+injuryDate+"', returnDate: '"+returnDate+"'}",
-                function (data) {
-
-                }, function () {
-                    console.log("Add injury fail");
-                })
+            if (name != '' && injuryDesc != '' && injuryDate != '' && returnDate != '') {
+                service("addInjury", "{name: '" + name + "', injuryDesc: '" + injuryDesc + "', dateInjured: '" + injuryDate + "', returnDate: '" + returnDate + "'}",
+                    function (data) {
+                        getCurrentInjuries();
+                        hideError();
+                    }, function () {
+                        console.log("Add injury fail");
+                        displayError();
+                    })
+            } else {
+                displayError();
+            }
         });
 
+        function displayError() {
+            $("#formError").css("display", "block");
+        }
+
+        function hideError() {
+            $("#formError").css("display", "none");
+        }
+
+        hideError();
         getCurrentInjuries();
         addPlayerNames("#player-select");
         addPlayerNames("#add-injury-name-select");
