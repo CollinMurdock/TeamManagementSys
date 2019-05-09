@@ -223,7 +223,7 @@ AS
 			steals = steals + @steals,
 			blocks = blocks + @blocks,
 			turnovers = turnovers + @turnovers
-	WHERE playerID = @id
+	WHERE playerID = @id AND season = @season
 
 GO
 

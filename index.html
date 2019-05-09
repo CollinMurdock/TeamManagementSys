@@ -20,51 +20,70 @@
     </header>
     <h1>View Players</h1>
     <div class="container">
-        <div id="add-player">
-            <button id="add-player-button" class="btn">Add Player</button>
-            <button id="hide-add-player-button" class="btn" style="display:none;">Hide</button>
-            <form id="add-player-form" style="display:none;">
-                <div class="form-row">
-                    <div class="form-group col-md-8">
-                        <label>Name</label>
-                        <input class="form-control" type="text" id="player-name" placeholder="John Smith" />
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>Position</label>
-                        <select class="form-control" id="player-position">
-                            <option>Guard</option>
-                            <option>Forward</option>
-                            <option>Center</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group col-md-8">
-                    <label>Date of Birth</label>
-                    <input class="form-control" type="date" id="player-dob">
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label>Height (inches)</label>
-                        <input class="form-control" type="number" id="player-height">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>Weight (pounds)</label>
-                        <input class="form-control" type="number" id="player-weight">
-                    </div>
-                </div>
-
-                <div class="form-group col-md-6">
-                    <button id="submit-player-button" type="button" class="btn">Submit Player</button>
-                </div>
-                
-            </form>
-        </div>
+        
     </div>
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
+                <div id="add-player">
+                    <button id="add-player-button" class="btn">Add Player</button>
+                    <button id="hide-add-player-button" class="btn" style="display:none;">Hide</button>
+                    <form id="add-player-form" style="display:none;">
+                        <div class="form-row">
+                            <div class="form-group col-md-8">
+                                <label>Name</label>
+                                <input class="form-control" type="text" id="player-name" placeholder="John Smith" />
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Position</label>
+                                <select class="form-control" id="player-position">
+                                    <option>Guard</option>
+                                    <option>Forward</option>
+                                    <option>Center</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <label>Date of Birth</label>
+                            <input class="form-control" type="date" id="player-dob">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Height (inches)</label>
+                                <input class="form-control" type="number" id="player-height">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Weight (pounds)</label>
+                                <input class="form-control" type="number" id="player-weight">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <button id="submit-player-button" type="button" class="btn">Submit Player</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div id="add-stats">
+                    <button id="add-game-stats-button" class="btn">Add Game Stats</button>
+                    <button id="hide-game-stats-button" class="btn" style="display:none;">Hide</button>
+                    <form id="add-game-stats-form" style="display:none;">
+                        <div class="form-group">
+                            <label>Select Player</label>
+                            <select class="form-control" id="player-select">
+                                <option>Select</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+            
                 <table id="player-table" class="table">
                     <thead class="thead-dark">
                         <tr>
@@ -194,7 +213,7 @@
                 }), function () { console.log("failed to delete player") };
             }
         }
-
+        //appear and hide mechanism for add player form
         $("#add-player-button").click(function () {
             $("#hide-add-player-button").css("display", "block");
             $(this).css("display", "none");
@@ -204,6 +223,18 @@
             $("#add-player-button").css("display", "block");
             $(this).css("display", "none");
             $("#add-player-form").css("display", "none");
+        });
+
+        //appear and hide mechanism for add game stats form
+        $("#add-game-stats-button").click(function () {
+            $("#hide-game-stats-button").css("display", "block");
+            $(this).css("display", "none");
+            $("#add-game-stats-form").css("display", "block");
+        });
+        $("#hide-game-stats-button").click(function () {
+            $("#add-game-stats-button").css("display", "block");
+            $(this).css("display", "none");
+            $("#add-game-stats-form").css("display", "none");
         });
 
         $("#submit-player-button").click(function () {
@@ -240,6 +271,24 @@
        
         });
 
+        //add player names to player select in add game stats
+        function addPlayerNames(element) {
+            service("getAllPlayers", "{}",
+                function (data) {
+                    console.log(data);
+                    var d = '';
+                    $.each(data, function (index, value) {
+
+                        d += '<option id="' + value.playerId + '">' + value.name + '</option>';
+                    });
+                    $(element).append(d);
+                }, function () {
+
+                }
+            );
+        }
+
+        addPlayerNames("player-select");
         getAllPlayers();
     </script>
 </body>
