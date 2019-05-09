@@ -30,7 +30,7 @@
         <div class="form-group col-md-3">
             <label>Select Player</label>
             <select class="form-control" id="player-select">
-                
+                <option>Select</option>
             </select>
         </div>
     </form>
@@ -97,7 +97,7 @@
                         
                         d += '<option id="' + value.playerId + '">' + value.name + '</option>';
                     });
-                    $("#player-select").html(d);
+                    $("#player-select").append(d);
                 }, function () {
 
                 }
