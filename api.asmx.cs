@@ -617,6 +617,12 @@ namespace WebAPI
             send("spAddInjury", serializeStyle.DATA_TABLE);
         }
 
+        [WebMethod]
+        public void addGameStats(string name, int year, int points, int assists, int rebounds, int steals, int blocks, int turnovers)
+        {
+
+        }
+
         #endregion
 		
 

@@ -20,51 +20,101 @@
     </header>
     <h1>View Players</h1>
     <div class="container">
-        <div id="add-player">
-            <button id="add-player-button" class="btn">Add Player</button>
-            <button id="hide-add-player-button" class="btn" style="display:none;">Hide</button>
-            <form id="add-player-form" style="display:none;">
-                <div class="form-row">
-                    <div class="form-group col-md-8">
-                        <label>Name</label>
-                        <input class="form-control" type="text" id="player-name" placeholder="John Smith" />
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>Position</label>
-                        <select class="form-control" id="player-position">
-                            <option>Guard</option>
-                            <option>Forward</option>
-                            <option>Center</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group col-md-8">
-                    <label>Date of Birth</label>
-                    <input class="form-control" type="date" id="player-dob">
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label>Height (inches)</label>
-                        <input class="form-control" type="number" id="player-height">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>Weight (pounds)</label>
-                        <input class="form-control" type="number" id="player-weight">
-                    </div>
-                </div>
-
-                <div class="form-group col-md-6">
-                    <button id="submit-player-button" type="button" class="btn">Submit Player</button>
-                </div>
-                
-            </form>
-        </div>
+        
     </div>
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
+                <div id="add-player">
+                    <button id="add-player-button" class="btn">Add Player</button>
+                    <button id="hide-add-player-button" class="btn" style="display:none;">Hide</button>
+                    <form id="add-player-form" style="display:none;">
+                        <div class="form-row">
+                            <div class="form-group col-md-8">
+                                <label>Name</label>
+                                <input class="form-control" type="text" id="game-stats-player-name" placeholder="John Smith" />
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Position</label>
+                                <select class="form-control" id="player-position">
+                                    <option>Guard</option>
+                                    <option>Forward</option>
+                                    <option>Center</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <label>Date of Birth</label>
+                            <input class="form-control" type="date" id="player-dob">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Height (inches)</label>
+                                <input class="form-control" type="number" id="player-height">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Weight (pounds)</label>
+                                <input class="form-control" type="number" id="player-weight">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <button id="submit-player-button" type="button" class="btn">Submit Player</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div id="add-stats">
+                    <button id="add-game-stats-button" class="btn">Add Game Stats</button>
+                    <button id="hide-game-stats-button" class="btn" style="display:none;">Hide</button>
+                    <form id="add-game-stats-form" style="display:none;">
+                        <div class="form-group col-md-6">
+                            <label>Select Player</label>
+                            <select class="form-control" id="player-select">
+                                <option>Select</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Year</label>
+                            <input class="form-control" type="text" id="stats-year-input">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Points</label>
+                            <input class="form-control" type="text" id="stats-points-input">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Rebounds</label>
+                            <input class="form-control" type="text" id="stats-rebounds-input">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Assists</label>
+                            <input class="form-control" type="text" id="stats-assists-input">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Steals</label>
+                            <input class="form-control" type="text" id="stats-steals-input">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Blocks</label>
+                            <input class="form-control" type="text" id="stats-blocks-input">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Turnovers</label>
+                            <input class="form-control" type="text" id="stats-turnovers-input">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <button id="submit-game-stats-button" type="button" class="btn">Submit Game Stats</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+            
                 <table id="player-table" class="table">
                     <thead class="thead-dark">
                         <tr>
@@ -100,6 +150,7 @@
         </div>
     </div>
     <script>
+        //load players into main table
         function getAllPlayers() {
             service("getAllPlayers", "{}", function (data) {
                 var d = "";
@@ -127,7 +178,7 @@
 
 
         }
-
+        //get stats of a single player
         function getPlayerStats(id) {
             console.log('hey' + id);
 
@@ -158,7 +209,7 @@
                 
             }, function () { console.log("fail") });
         }
-
+        //get stat averages of a single player
         function getPlayerAverages(id) {
             service("getPlayerAverages", "{id: " + id + "}", function (data) {
 
@@ -187,6 +238,7 @@
             }, function () { console.log("fail") });
         }
 
+        //remove a player
         function removePlayer(first, last, id) {
             if (confirm("Deleting player: " + first + " " + last)) {
                 service("deletePlayer", "{id: " + id + "}", function (data) {
@@ -194,7 +246,7 @@
                 }), function () { console.log("failed to delete player") };
             }
         }
-
+        //appear and hide mechanism for add player form
         $("#add-player-button").click(function () {
             $("#hide-add-player-button").css("display", "block");
             $(this).css("display", "none");
@@ -206,6 +258,19 @@
             $("#add-player-form").css("display", "none");
         });
 
+        //appear and hide mechanism for add game stats form
+        $("#add-game-stats-button").click(function () {
+            $("#hide-game-stats-button").css("display", "block");
+            $(this).css("display", "none");
+            $("#add-game-stats-form").css("display", "block");
+        });
+        $("#hide-game-stats-button").click(function () {
+            $("#add-game-stats-button").css("display", "block");
+            $(this).css("display", "none");
+            $("#add-game-stats-form").css("display", "none");
+        });
+
+        //submit a player
         $("#submit-player-button").click(function () {
             //Player name
             var name = $("form #player-name").val();
@@ -240,7 +305,47 @@
        
         });
 
+        $("#submit-game-stats-button").click(function () {
+            var name = $("#game-stats-player-name").val();
+            var season = $("#stats-year-input").val();
+            var points = $("#stats-points-input").val();
+            var assists = $("#stats-assists-input").val();
+            var rebounds = $("#stats-rebounds-input").val();
+            var steals = $("#stats-steals-input").val();
+            var blocks = $("#stats-blocks-input").val();
+            var turnovers = $("#stats-turnovers-input").val();
+
+            service("addPlayer", "{name: '" + name + "', position: '" + position + "', dob: '" + dob + "', height: " + height + ", weight: " + weight + "}",
+                function (data) {
+                    console.log("Player successfully added");
+                    getAllPlayers();
+                    $("#hide-add-player-button").trigger("click");
+                }, function () {
+                    console.log("failed to add player");
+                }
+            );
+        });
+
+        //add player names to player select in add game stats
+        function addPlayerNames(element) {
+            service("getAllPlayers", "{}",
+                function (data) {
+                    console.log(data);
+                    var d = '';
+                    $.each(data, function (index, value) {
+
+                        d += '<option id="' + value.playerId + '">' + value.name + '</option>';
+                    });
+                    $(element).append(d);
+                }, function () {
+
+                }
+            );
+        }
+
+        addPlayerNames("#player-select");
         getAllPlayers();
+
     </script>
 </body>
 </html>
