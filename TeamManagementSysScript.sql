@@ -136,13 +136,15 @@ CREATE PROCEDURE spAddInjury
 	@injuryDesc				VARCHAR(80),
 	@dateInjured			DATE,
 	@returnDate	DATE,
-	@id						INT
+	@name					VARCHAR(60)
 
 AS
 	SET NOCOUNT ON
 
+	
+
 	INSERT INTO Injuries(playerID, injuryDescription, dateInjured, returnDate)
-	VALUES(@id, @injuryDesc, @dateInjured, @returnDate)
+	VALUES((SELECT playerID FROM Players WHERE name = @name), @injuryDesc, @dateInjured, @returnDate)
 
 GO
 
