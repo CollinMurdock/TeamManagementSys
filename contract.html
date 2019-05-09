@@ -41,7 +41,7 @@
                     </div>
                     <div class="form-row" id="formError">
                         <div class="alert alert-danger">
-                            <strong>    Danger!</strong> You must submit a valid bonus and salary!
+                            <strong>Danger!</strong> You must submit a valid bonus and salary!
                         </div>
                     </div>
                 </form>
@@ -67,8 +67,8 @@
                     $.each(value.Year, function (year, yearValue) {
                         d += "<tr>";
                         d += "<td class = 'col-md-4'>" + yearValue.year + "</td>";
-                        d += "<td class = 'col-md-4'>" + formatNumber(yearValue.salary) + "</td>";
-                        d += "<td class = 'col-md-4'>" + formatNumber(yearValue.bonus) + "</td>";
+                        d += "<td class = 'col-md-4'>$" + formatNumber(yearValue.salary) + "</td>";
+                        d += "<td class = 'col-md-4'>$" + formatNumber(yearValue.bonus) + "</td>";
                         d += "</tr>";
                         nextYear = yearValue.year + 1;
                     });
@@ -95,6 +95,9 @@
         function addContractToDB(id, year) {
             var salary = $("#player-salary").val();
             var bonus = $("#player-bonus").val();
+            if (salary < 0 || salary > 2147483647 || bonus < 0 || bonus > 2147483647) {
+                displayError();
+            }
             if (salary !== '' && bonus !== '') { 
                 console.log(salary);
                 service("addContractYear", "{year: '" + year + "', salary: '" + salary + "', bonus: '" + bonus + "', id: '" + id + "'}", function (data) {
