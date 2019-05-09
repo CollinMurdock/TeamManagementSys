@@ -155,6 +155,7 @@ AS
 	FROM Injuries i 
 		JOIN Players p ON i.playerID = p.playerID
 	WHERE p.name = @name
+	ORDER BY i.dateInjured DESC
 GO
 
 CREATE PROCEDURE spGetCurrentInjuries
@@ -350,7 +351,11 @@ VALUES	(3, 'ACL TORN', '1/1/2019', '8/5/2019'),
 		(9, 'Needs Rest', '4/1/2019', '4/5/2019'),
 		(5, 'Broken Thumb', '11/14/2019', '1/6/2019'),
 		(15, 'Shin Splints', '12/15/2019', '1/2/2019'),
-		(15, 'Strained Hamstring', '4/1/2019', '5/15/2019')
+		(1, 'Strained Hamstring', '4/1/2019', '5/15/2019'),
+		(3, 'Flu', '4/1/2018', '4/10/2018'),
+		(9, 'Heart Attack', '2/2/2017', '12/25/2017'),
+		(12, 'MCL TORN', '1/19/2016', '12/5/2016'),
+		(3, 'Strained Calf', '12/28/2018', '01/20/2019')
 
 --===========================================================Contracts
 -- BULK INSERT Contracts
