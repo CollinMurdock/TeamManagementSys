@@ -83,7 +83,10 @@
                     </div>
                     <div class="form-group col-md-12">
                         <label for="exampleFormControlTextarea1">Injury Description</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea class="form-control" id="injury-desc-input" rows="3"></textarea>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <button id="submit-injury-button" class="btn">Submit Injury</button>
                     </div>
                 </form>
             </div>
@@ -137,9 +140,7 @@
                     var d = '';
                     $.each(data, function (index, value) {
                         var regEx = /\d+/g;
-                        console.log(parseInt(value.dateInjured.match(regEx)));
                         var dI = new Date(parseInt(value.dateInjured.match(regEx)));
-                        console.log(dI);
                         var dateInjuredString = (dI.getMonth() + 1) + '-' + dI.getDate() + '-' + dI.getFullYear();
                         var dR = new Date(parseInt(value.returnDate.match(regEx)));
                         var dateReturnString = (dR.getMonth() + 1) + '-' + dR.getDate() + '-' + dR.getFullYear();
@@ -173,6 +174,20 @@
         function showDetails(id) {
             alert("You selected id: " + id);
         }
+
+        $("#submit-injury-button").click(function () {
+            var name = $("#add-injury-name-select").val();
+            var injuryDesc = $("#injury-desc-input").val();
+            var injuryDate = $("#date-injured-input").val();
+            var returnDate = $("#date-return-input").val();
+
+            service("addInjury", "{name: '" + name + "', injuryDesc: '"+injuryDesc+"', dateInjured: '"+injuryDate+"', returnDate: '"+returnDate+"'}",
+                function (data) {
+
+                }, function () {
+                    console.log("Add injury fail");
+                })
+        });
 
         getCurrentInjuries();
         addPlayerNames("#player-select");

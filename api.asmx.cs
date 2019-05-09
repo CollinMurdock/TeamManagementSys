@@ -607,6 +607,16 @@ namespace WebAPI
             send("spGetPlayerInjuries", serializeStyle.DATA_TABLE);
         }
 
+        [WebMethod]
+        public void addInjury(string name, string injuryDesc, string dateInjured, string returnDate)
+        {
+            addParam("@injuryDesc", injuryDesc);
+            addParam("@dateInjured", dateInjured);
+            addParam("@returnDate", returnDate);
+            addParam("@name", name);
+            send("spAddInjury", serializeStyle.DATA_TABLE);
+        }
+
         #endregion
 		
 
