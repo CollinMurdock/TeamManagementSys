@@ -204,7 +204,7 @@ AS
 GO
 
 CREATE PROCEDURE spAddGameStats
-	@id			INT,
+	@name			VARCHAR(60),
 	@season		INT,
 	@points		INT,
 	@assists	INT,
@@ -223,7 +223,9 @@ AS
 			steals = steals + @steals,
 			blocks = blocks + @blocks,
 			turnovers = turnovers + @turnovers
-	WHERE playerID = @id AND season = @season
+	WHERE season = @season AND playerID IN (
+		SELECT playerID FROM Players WHERE name = @name
+	)
 
 GO
 
