@@ -19,24 +19,23 @@
         </nav>
     </header>
     <h1>View Contracts</h1>
-    <div class ="container">
+    <div class="container">
         <div class="row">
             <div class="col-md-6" id="playerContracts"></div>
             <div class="col-md-6" id="addPlayerContractYear" style="display:none">
                 <form>
                     <div class="form-row">
-                        <div class="form-group col-md-8">
-                            <label>Name</label>
-                            <input class="form-control" type="text" id="player-name" placeholder="John Smith" />
+                        <div class="form-group col-md-6">
+                            <label>Salary</label>
+                            <input class="form-control" type="text" id="player-salary" placeholder="2000000" />
                         </div>
-                        <div class="form-group col-md-4">
-                            <label>Position</label>
-                            <select class="form-control" id="player-position">
-                                <option>Guard</option>
-                                <option>Forward</option>
-                                <option>Center</option>
-                            </select>
+                        <div class="form-group col-md-6">
+                            <label>Bonus</label>
+                            <input class="form-control" type="text" id="player-bonus" placeholder="0" />
                         </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2" id="submitContractButton"></div>
                     </div>
                 </form>
             </div>
@@ -50,7 +49,7 @@
                 $.each(data.Contracts, function (index, value) {
                     var nextYear = 2019;
                     d += "<div class = 'row'>";
-                    d += "<h3>" + value.Name +"</h3>";
+                    d += "<h3>" + value.Name + "</h3>";
                     d += '<table class="table" style="max-width:800px;">';
                     d += "<thead class='thead-dark'>";
                     d += "<tr>";
@@ -71,6 +70,7 @@
                     d += "<button class = 'btn' onclick = 'addContractYear(" + value.ID + ", " + nextYear + ")'>Add Year</button>";
                     d += "</div>";
                     d += "<br><br>";
+                    console.log(value);
                 });
                 $("#playerContracts").html(d);
             }, function () { console.log("fail") });
@@ -78,12 +78,24 @@
 
         function addContractYear(id, nextYear) {
             $("#addPlayerContractYear").css("display", "block");
+            var d = "<button class = 'btn' onclick = 'addContractToDB(" + id + ", " + nextYear + ")'> Add Year</button>";
+            $("#submitContractButton").html(d);
+        }
+
+        function addContractToDB(id, year) {
+            //TODO: Check if these variables are set before going into service
+            var salary = $("#player-salary").val();
+            var bonus = $("#player-bonus").val();
+            service("addContractYear", "{year: '" + year + "', salary: '" + salary + "', bonus: '" + bonus + "', id: '" + id + "'}", function (data) {
+                console.log(data);
+                $("#addPlayerContractYear").css("display", "none");
+                getAllPlayerContract();
+            });
         }
 
         function formatNumber(num) {
             return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
         }
-
 
         function showDetails(id) {
             alert("You selected id: " + id);
