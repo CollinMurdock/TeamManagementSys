@@ -9,6 +9,7 @@
     <header>
 
         <nav class="navbar navbar-inverse">
+            <a href="#" class="navbar-brand"><img class="logo" src="images/logo.png" alt="Alternate Text" /></a>
             <div class="navbar-header">
                 <a class="navbar-brand" href="index.html">Team Management System</a>
             </div>
@@ -16,7 +17,9 @@
                 <li><a href="injuries.html">Injury page</a></li>
                 <li><a href="contract.html">Player Contract Page</a></li>
             </ul>
+
         </nav>
+        
     </header>
     <h1>View Players</h1>
     <div class="container">
@@ -32,7 +35,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-8">
                                 <label>Name</label>
-                                <input class="form-control" type="text" id="game-stats-player-name" placeholder="John Smith" />
+                                <input class="form-control" type="text" id="player-name" placeholder="John Smith" />
                             </div>
                             <div class="form-group col-md-4">
                                 <label>Position</label>
@@ -306,7 +309,7 @@
         });
 
         $("#submit-game-stats-button").click(function () {
-            var name = $("#game-stats-player-name").val();
+            var name = $("#player-select").val();
             var season = $("#stats-year-input").val();
             var points = $("#stats-points-input").val();
             var assists = $("#stats-assists-input").val();
@@ -314,10 +317,12 @@
             var steals = $("#stats-steals-input").val();
             var blocks = $("#stats-blocks-input").val();
             var turnovers = $("#stats-turnovers-input").val();
+
+
             service("addGameStats", "{name: '" + name + "', year: " + season + ", points: " + points + ", assists: " + assists + ", rebounds: " + rebounds + ", steals: "+steals+", blocks: "+blocks+", turnovers: "+turnovers+"}",
                 function (data) {
                     console.log("Game successfully added");
-                    getAllPlayers();
+                    $(".stats").css("display", "none");
                     $("#hide-game-stats-button").trigger("click");
                 }, function () {
                     console.log("failed to add game");
@@ -348,6 +353,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 
