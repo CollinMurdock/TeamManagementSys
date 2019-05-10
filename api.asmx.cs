@@ -620,7 +620,15 @@ namespace WebAPI
         [WebMethod]
         public void addGameStats(string name, int year, int points, int assists, int rebounds, int steals, int blocks, int turnovers)
         {
-
+            addParam("@name", name);
+            addParam("@season", year);
+            addParam("@points", points);
+            addParam("@assists", assists);
+            addParam("@rebounds", rebounds);
+            addParam("@steals", steals);
+            addParam("@blocks", blocks);
+            addParam("@turnovers", turnovers);
+            send("spAddGameStats", serializeStyle.DATA_TABLE);
         }
 
         #endregion
@@ -629,3 +637,4 @@ namespace WebAPI
 
     }
 }
+
