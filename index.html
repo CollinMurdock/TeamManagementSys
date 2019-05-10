@@ -314,14 +314,13 @@
             var steals = $("#stats-steals-input").val();
             var blocks = $("#stats-blocks-input").val();
             var turnovers = $("#stats-turnovers-input").val();
-
-            service("addPlayer", "{name: '" + name + "', position: '" + position + "', dob: '" + dob + "', height: " + height + ", weight: " + weight + "}",
+            service("addGameStats", "{name: '" + name + "', year: " + season + ", points: " + points + ", assists: " + assists + ", rebounds: " + rebounds + ", steals: "+steals+", blocks: "+blocks+", turnovers: "+turnovers+"}",
                 function (data) {
-                    console.log("Player successfully added");
+                    console.log("Game successfully added");
                     getAllPlayers();
-                    $("#hide-add-player-button").trigger("click");
+                    $("#hide-game-stats-button").trigger("click");
                 }, function () {
-                    console.log("failed to add player");
+                    console.log("failed to add game");
                 }
             );
         });
@@ -349,4 +348,6 @@
     </script>
 </body>
 </html>
+
+
 
