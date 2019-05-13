@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27703.2042
+VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleWebsiteAndAPI_Update", "SimpleWebsiteAndAPI_Update.csproj", "{8F708F74-4581-459B-872D-1DE9AEEF2D24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleWebsiteAndAPI_Update", "SimpleWebsiteAndAPI\SimpleWebsiteAndAPI_Update.csproj", "{8F708F74-4581-459B-872D-1DE9AEEF2D24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +20,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {DCDD8D6C-AF5F-4BFE-8D85-49BD0F490765}
+		SolutionGuid = {E852F94D-8A95-4F95-B396-601619DA9270}
 	EndGlobalSection
 EndGlobal

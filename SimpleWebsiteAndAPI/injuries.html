@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Injuries Page</title>
+    <link rel="import" href="includes/head.html">
+    <link rel="stylesheet" type="text/css" href="includes/Style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-inverse">
+            <a href="#" class="navbar-brand"><img class="logo" src="images/logo.png" alt="Alternate Text" /></a>
+            <div class="navbar-header">
+                <a class="navbar-brand" href="index.html">Team Management System</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="injuries.html">Injury Page</a></li>
+                <li><a href="contract.html">Player Contract Page</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>View Injuries</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <span>View all current injuries</span>
+                <label class="switch">
+                    <input id="injury-switch" type="checkbox" />
+                    <span class="slider round"></span>
+                </label>
+
+                <form id="select-player">
+                    <div class="form-group">
+                        <label>Select Player</label>
+                        <select class="form-control" id="player-select">
+                            <option>Select</option>
+                        </select>
+                    </div>
+                </form>
+
+                <div id="all-injuries" style="display:none;">
+                    <table class="table" style="max-width:800px;">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Injury Date</th>
+                                <th>Injury Description</th>
+                                <th>Estimated Return</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyAllInjuries"></tbody>
+                    </table>
+                </div>
+
+
+                <div id="player-injuries" style="display:none;">
+                    <table class="table" style="max-width:800px;">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Injury Date</th>
+                                <th>Injury Return</th>
+                                <th>Injury Description</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyAllPlayerInjuries"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <h1>Add an Injury</h1>
+                <form>
+                    <div class="form-group col-md-12">
+                        <label>Name</label>
+                        <select class="form-control" id="add-injury-name-select"><option>Select</option></select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Date Injured</label>
+                        <input class="form-control" type="date" id="date-injured-input">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Expected Date of Return</label>
+                        <input class="form-control" type="date" id="date-return-input">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="exampleFormControlTextarea1">Injury Description</label>
+                        <textarea class="form-control" id="injury-desc-input" rows="3"></textarea>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <button id="submit-injury-button" type ="button"class="btn">Submit Injury</button>
+                    </div>
+                    <div class="form-row" id="formError">
+                        <div class="alert alert-danger">
+                            <strong>Danger!</strong> You must submit valid injury information!
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+       </div>
+    <script>
+        function getCurrentInjuries() {
+
+            service("getCurrentInjuries", "{}", function (data) {
+                console.log(data);
+                var d = "";
+                $.each(data, function (index, value) {
+                    var regEx = /\d+/g;
+                    var dI = new Date(parseInt(value.dateInjured.match(regEx)));
+                    var dateInjuredString = (dI.getMonth() + 1) + '-' + dI.getDate() + '-' + dI.getFullYear();
+                    var dR = new Date(parseInt(value.returnDate.match(regEx)));
+                    var dateReturnString = (dR.getMonth() + 1) + '-' + dR.getDate() + '-' + dR.getFullYear();
+
+                    d += '<tr>'
+                    d += '<td>' + value.name + '</td>';
+                    d += '<td>' + dateInjuredString + '</td>';
+                    d += '<td>' + dateReturnString + '</td>';
+                    d += '<td>' + value.injuryDescription + '</td>';
+                    d += '</tr>';
+                });
+                $("#bodyAllInjuries").html(d);
+            }, function () { console.log("fail") });
+
+        }
+
+        function addPlayerNames(element) {
+            service("getAllPlayers", "{}",
+                function (data) {
+                    console.log(data);
+                    var d = '';
+                    $.each(data, function (index, value) {
+
+                        d += '<option id="' + value.playerId + '">' + value.name + '</option>';
+                    });
+                    $(element).append(d);
+                }, function () {
+
+                }
+            );
+        }
+
+        $("#player-select").change(function () {
+            var name = $("#player-select").val();
+            service("getPlayerInjuries", "{name: '" + name + "'}",
+                function (data) {
+                    console.log(data);
+                    var d = '';
+                    $.each(data, function (index, value) {
+                        var regEx = /\d+/g;
+                        var dI = new Date(parseInt(value.dateInjured.match(regEx)));
+                        var dateInjuredString = (dI.getMonth() + 1) + '-' + dI.getDate() + '-' + dI.getFullYear();
+                        var dR = new Date(parseInt(value.returnDate.match(regEx)));
+                        var dateReturnString = (dR.getMonth() + 1) + '-' + dR.getDate() + '-' + dR.getFullYear();
+
+                        d += '<tr>'
+                        d += '<td>' + dateInjuredString + '</td>';
+                        d += '<td>' + dateReturnString + '</td>';
+                        d += '<td>' + value.injuryDescription + '</td>';
+                        d += '</tr>';
+                    });
+                    $("#bodyAllPlayerInjuries").html(d);
+                }, function () {
+                    console.log("player injury retrieve failed");
+                }
+            );
+
+            $("#player-injuries").css("display", "block");
+        });
+
+
+        $("#injury-switch").change(function () {
+            if (this.checked) {
+                $("#player-injuries").css("display", "none");
+                $("#all-injuries").css("display", "block");
+                $("#select-player").css("display", "none");
+            } else {
+                $("#all-injuries").css("display", "none");
+                $("#select-player").css("display", "block");
+            }
+        });
+        function showDetails(id) {
+            alert("You selected id: " + id);
+        }
+
+        $("#submit-injury-button").click(function () {
+            var name = $("#add-injury-name-select").val();
+            var injuryDesc = $("#injury-desc-input").val();
+            var injuryDate = $("#date-injured-input").val();
+            var returnDate = $("#date-return-input").val();
+
+            if (name == "" || injuryDesc == "" || injuryDate == "" || returnDate == "") {
+                displayError();
+            } else {
+                hideError();
+                service("addInjury", "{name: '" + name + "', injuryDesc: '" + injuryDesc + "', dateInjured: '" + injuryDate + "', returnDate: '" + returnDate + "'}",
+                    function (data) {
+                
+                    }, function () {
+                        console.log("Add injury fail");
+                    })
+            }
+        });
+
+        getCurrentInjuries();
+        addPlayerNames("#player-select");
+        addPlayerNames("#add-injury-name-select");
+        hideError();
+
+
+        function hideError() {
+            $("#formError").css("display", "none");
+        }
+        function displayError() {
+            $("#formError").css("display", "block");
+        }
+    </script>
+</body>
+</html>
+
